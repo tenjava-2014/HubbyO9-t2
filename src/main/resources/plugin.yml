@@ -1,0 +1,3 @@
+name: HubbyO9-t2
+main: com.tenjava.entries.HubbyO9.t2.TenJava
+version: '${project.version}'
