@@ -10,6 +10,7 @@ public class EMStorage {
 	public int MaxInput;
 	public String id;
 	public Location location;
+	public Location LinkedTo;
 
 	public void storeEM(int amount){
 		if(amount <= MaxInput){

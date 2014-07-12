@@ -1,6 +1,7 @@
 package com.tenjava.entries.HubbyO9.t2.Listeners;
 
 
+import com.tenjava.entries.HubbyO9.t2.TenJava;
 import org.bukkit.Material;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -10,14 +11,18 @@ public class RemoveBlock implements Listener {
 
 	@EventHandler
 	public void onBlockRemove(BlockBreakEvent event){
-		if(event.getBlock().getType().equals(Material.RAILS)){
-
-		}else if(event.getBlock().getType().equals(Material.DAYLIGHT_DETECTOR)){
-			//Solar Panel
-		}else if(event.getBlock().getType().equals(Material.REDSTONE_BLOCK)){
-			//Energy Storage
+		if(event.getBlock().getType().equals(Material.DAYLIGHT_DETECTOR)){
+			if(TenJava.manager.generatorExists(event.getBlock().getLocation())){
+				TenJava.manager.unregisterGenerator(event.getBlock().getLocation());
+			}
+		}else if(event.getBlock().getType().equals(Material.REDSTONE_COMPARATOR)){
+			if(TenJava.manager.relayExists(event.getBlock().getLocation())){
+				TenJava.manager.unregisterRelay(event.getBlock().getLocation());
+			}
 		}else if(event.getBlock().getType().equals(Material.CHEST)){
-			//Mass Fabricator thingy
+			if(TenJava.manager.storageExists(event.getBlock().getLocation())){
+				TenJava.manager.unregisterStorage(event.getBlock().getLocation());
+			}
 		}
 	}
 }

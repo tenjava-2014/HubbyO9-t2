@@ -1,5 +1,6 @@
 package com.tenjava.entries.HubbyO9.t2;
 
+import com.tenjava.entries.HubbyO9.t2.Listeners.PlayerInteract;
 import com.tenjava.entries.HubbyO9.t2.Listeners.RemoveBlock;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -7,6 +8,7 @@ import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.ShapedRecipe;
 import org.bukkit.inventory.meta.ItemMeta;
+import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.util.ArrayList;
@@ -15,13 +17,16 @@ import java.util.List;
 public class TenJava extends JavaPlugin {
 
 	public static EMManager manager;
+	public static Plugin plugin;
 
 	@Override
 	public void onEnable() {
+		plugin = this;
 		manager = new EMManager();
 		loadListeners();
 		loadCommands();
 		createRecipes();
+		manager.startup();
 	}
 
 	@Override
@@ -31,6 +36,7 @@ public class TenJava extends JavaPlugin {
 
 	public void loadListeners() {
 		Bukkit.getPluginManager().registerEvents(new RemoveBlock(), this);
+		Bukkit.getPluginManager().registerEvents(new PlayerInteract(), this);
 	}
 
 	public void loadCommands(){
@@ -68,17 +74,6 @@ public class TenJava extends JavaPlugin {
 		energystorage.setIngredient('R', Material.REDSTONE);
 		energystorage.setIngredient('B', Material.REDSTONE_BLOCK);
 		Bukkit.addRecipe(energystorage);
-		/*EM Wire*/
-		ItemMeta railMeta = new ItemStack(Material.RAILS).getItemMeta();
-		railMeta.setDisplayName(ChatColor.GOLD + "Simple Wire");
-		ItemStack rails = new ItemStack(Material.RAILS);
-		rails.setItemMeta(railMeta);
-		rails.setAmount(8);
-		ShapedRecipe wire = new ShapedRecipe(rails);
-		wire.shape("I", "R", "I", "I", "R", "I", "I", "R", "I");
-		wire.setIngredient('I', Material.IRON_INGOT);
-		wire.setIngredient('R', Material.REDSTONE);
-		Bukkit.addRecipe(wire);
 		/*Techno Phreak Wand*/
 		ItemMeta blazeMeta = new ItemStack(Material.BLAZE_ROD).getItemMeta();
 		blazeMeta.setDisplayName(ChatColor.RED + "Techno Phreak Wand");
